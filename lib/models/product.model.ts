@@ -9,7 +9,6 @@ const productSchema = new mongoose.Schema({
   
   currency: {
     type:String,
-    unique: true,
   },
 
   currentPrice: {

@@ -9,10 +9,8 @@ export async function scrapeAndStoreProducts(productURL: string) {
   if (!productURL) return;
   try {
     await dbConnect();  // Await the database connection
-
     const scrapedProduct = await scrapeAmazonProduct(productURL);
     if (!scrapedProduct) return;
-
     let product = scrapedProduct;
     const existingProduct = await Product.findOne({ url: scrapedProduct.url });
 
@@ -30,7 +28,6 @@ export async function scrapeAndStoreProducts(productURL: string) {
         averagePrice: getAveragePrice(updatedPriceHistory)
       };
     }
-
     const newProduct = await Product.findOneAndUpdate(
       { url: scrapedProduct.url },
       product,

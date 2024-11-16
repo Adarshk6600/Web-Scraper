@@ -35,7 +35,7 @@ const Home = async () => {
           {allProducts?.map((product) => (
             <ProductCards key={product._id} product={product} />
           ))}
-         </div>
+        </div>
       </section>
     </>
   )

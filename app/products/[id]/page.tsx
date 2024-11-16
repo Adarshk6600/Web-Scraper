@@ -1,5 +1,5 @@
 import React from 'react';
-import { getProductById } from '../../../lib/actions/index';
+import Product from '../../../lib/models/product.model';
 import { redirect } from 'next/navigation';
 
 type Props = {
@@ -10,18 +10,21 @@ type Props = {
 
 const ProductDetails = async ({ params: { id } }: Props) => {
   try {
-    const product = await getProductById(id);
+    const product = await Product.findOne({ _id: id });
+    console.log(product);
+    
 
     if (!product) {
       redirect('/'); // Redirect if the product does not exist
-      return null; // Prevent further rendering
     }
 
     return (
       <div>
         <h1>{product.title}</h1>
+        <br />
         <p>{product.description}</p>
-        <p>Price: ${product.price.toFixed(2)}</p>
+        <br />
+        <p>Price: ${product.currentPrice}</p>
       </div>
     );
   } catch (error) {

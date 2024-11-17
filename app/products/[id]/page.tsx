@@ -21,7 +21,7 @@ const ProductDetails = async ({ params: { id } }: Props) => {
     }
 
     const similarProducts = await Product.find({_id:{$ne:id}}).limit(3)
-    console.log(similarProducts);
+
      
 
     return (
@@ -115,10 +115,9 @@ const ProductDetails = async ({ params: { id } }: Props) => {
             </div>
           </div>
         </div>
-          <div className='flex flex-col gap-16 border-2
-          border-black'>
-            <div className='flex flex-col gap-16 border-2'>
-              <h3 className='text-2xl text-secondary font-semibold'>Product Description</h3>
+          <div className='flex flex-col gap-16'>
+            <div className='flex flex-col gap-16'>
+              <h3 className='text-4xl text-secondary font-semibold'>Product Description</h3>
               <div className='flex flex-col gap-4'>
                  {product.description?.split('/n')}
               </div>
@@ -132,12 +131,15 @@ const ProductDetails = async ({ params: { id } }: Props) => {
           </div>
         {similarProducts && similarProducts?.length > 0 && (
           <div className='py-14 flex flex-col gap-2 w-full'>
-              <div>
-            <p className='section-text'>{similarProducts.map((product) => (
+            <h1 className='font-bold text-[3rem]'>Trending</h1>
+            <div className='flex justify-between'>
+              {similarProducts.map((product) => (
+                <div key={product._id}>
                 <Link href={`/products/${product._id}`}>
                 <Image src={product.image} width={200} height={300} alt={product.title} />
                 </Link>
-            ))}</p>
+                </div>
+            ))}
             </div>
           </div>
           )}

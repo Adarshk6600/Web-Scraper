@@ -25,7 +25,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "PriceTracker",
+  title: "Deal Hunt",
   description: "Track product prices and availability and much more effortlessly",
 };
 

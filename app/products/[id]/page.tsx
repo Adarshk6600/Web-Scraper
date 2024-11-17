@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { formatNumber } from '../../../lib/utils';
 import PriceInfoCard from '../../../components/PriceInfoCard';
+import Modal from '../../../components/Modal';
 
 type Props = {
   params: {
@@ -111,7 +112,7 @@ const ProductDetails = async ({ params: { id } }: Props) => {
                   />
                 </div>
               </div>
-              {/* <Modal /> */}
+              <Modal />
             </div>
           </div>
         </div>
@@ -136,7 +137,10 @@ const ProductDetails = async ({ params: { id } }: Props) => {
               {similarProducts.map((product) => (
                 <div key={product._id}>
                 <Link href={`/products/${product._id}`}>
-                <Image src={product.image} width={200} height={300} alt={product.title} />
+                    <Image src={product.image} width={250} height={300} alt={product.title} />
+                    <div className='mt-4 p-3'>
+                      <p className='w-[70%] text-[14px] mt-5'>{product.title.slice(0, 60)}</p> <p className='mt-5 text-[20px] font-semibold'>{product.currency}{product.currentPrice}</p>
+                     </div>
                 </Link>
                 </div>
             ))}

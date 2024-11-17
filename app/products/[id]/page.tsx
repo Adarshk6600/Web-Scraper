@@ -14,13 +14,15 @@ type Props = {
 
 const ProductDetails = async ({ params: { id } }: Props) => {
   try {
-    const product = await Product.findOne({ _id: id });
-    console.log(product);
-    
+    const product = await Product.findOne({ _id: id });    
 
     if (!product) {
       redirect('/'); // Redirect if the product does not exist
     }
+
+    const similarProducts = await Product.find({_id:{$ne:id}}).limit(3)
+    console.log(similarProducts);
+     
 
     return (
       <div className='product-container'>
@@ -112,15 +114,33 @@ const ProductDetails = async ({ params: { id } }: Props) => {
               {/* <Modal /> */}
             </div>
           </div>
+        </div>
           <div className='flex flex-col gap-16 border-2
           border-black'>
             <div className='flex flex-col gap-16 border-2'>
-               <h3 className='text-2xl text-secondary font-semibold'>Product Description</h3>
-             </div>
+              <h3 className='text-2xl text-secondary font-semibold'>Product Description</h3>
+              <div className='flex flex-col gap-4'>
+                 {product.description?.split('/n')}
+              </div>
           </div>
-
-        </div>
-          
+          <button className='btn w-fit mx-auto flex items-center justify-center gap-3 min-w-[200px]'>
+            <Image src='/assets/icons/bag.svg' alt='bag' width={22} height={22} />
+            <Link href='/' className='text-base text-white'>
+             Buy Now
+            </Link>
+          </button>
+          </div>
+        {similarProducts && similarProducts?.length > 0 && (
+          <div className='py-14 flex flex-col gap-2 w-full'>
+              <div>
+            <p className='section-text'>{similarProducts.map((product) => (
+                <Link href={`/products/${product._id}`}>
+                <Image src={product.image} width={200} height={300} alt={product.title} />
+                </Link>
+            ))}</p>
+            </div>
+          </div>
+          )}
       </div>
     );
   } catch (error) {
